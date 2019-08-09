@@ -1,36 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
+import { MyContext } from '../Context'
 import axios from 'axios'
 
-const Graph = () => {
+const Graph = props => {
+  const { token, login } = useContext(MyContext)
+  login(token)
+  console.log(token)
+  //Checar esto.
+  if(!token) props.history.push('/')
 
-  useEffect(() => {
-    const from = document.getElementById('from')
-    const to = document.getElementById('to')
-    const error = document.getElementById('err')
-
-    from.addEventListener('input', () => {
-      if (to.value > from.value) {
-        error.innerHTML = ''
-      } 
-      else error.innerHTML = "The end date can't be before start date."
-    })
-  
-    to.addEventListener('input', () => {
-      if (to.value > from.value) {
-        error.innerHTML = ''
-      } 
-      else error.innerHTML = "The end date can't be before start date."
-    })
-
-  }, [])
+  const getData = () => {
+    
+  }
 
   return (
     <div>
       <div className="inputs">
-        <label htmlFor="period">Period</label>
-        <input type="date" id="from"/>
-        <input type="date" id="to"/>
-        <p style={{color: "red"}} id="err"></p>
+        <div className="container">
+          <label>Period</label><br/>
+          <input type="date" id="startDate"/>
+          <input type="date" id="endDate"/>
+        </div>
+        <div className="container">
+          <label>Start hour</label><br/>
+          <input type="number" id="startHour"/>
+        </div>
+        <div className="container">
+          <label>End hour</label><br/>
+          <input type="number" id="endHour"/>
+        </div>
+        <div className="container">
+          <label>Refresh</label><br/>
+          <button onClick={getData}>Refresh</button>
+        </div>
       </div>
     </div>
   )

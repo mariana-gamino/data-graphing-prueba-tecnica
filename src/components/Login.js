@@ -1,26 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import axios from 'axios'
 import useForm from '../hooks/useForm'
 import swal from 'sweetalert'
+import { MyContext } from '../Context'
 const baseURL = 'https://voldemort.klustera.com'
 
 
 const Login = props => {
   const [form, handleInputs] = useForm()
   const { username, password } = form
+  const { login } = useContext(MyContext)
 
   const handleLogin = () => {
-
     let config = {auth: {
       username: username,
       password: password
     }}
 
-    
     axios.get(`${baseURL}/login`, config)
     .then(response => {
         const {token} = response.data
-        console.log(token)
+        login(token)
+        props.history.push('/graph')
     })
     .catch(err => {
         console.log(err)

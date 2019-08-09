@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #F4F4EF;
 }
 
 code {
@@ -14,4 +15,14 @@ code {
 
 .swal-text{
   text-align: center;
+}
+
+.inputs {
+  height: 10vh;
+  margin: 10px 5px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px 2px #E0E0DB;
+  display: flex;
 }
