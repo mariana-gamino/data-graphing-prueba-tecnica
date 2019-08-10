@@ -13,12 +13,66 @@ code {
     monospace;
 }
 
+/* Login Component */
 .swal-text{
   text-align: center;
 }
 
+.loginContainer{
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  background-image: url('/login-background.jpeg');
+  background-size: cover;
+}
+
+.loginForm{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  height: 45vh;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.loginForm h2{
+  color: rgb(32, 35, 39);
+  font-size: 2em;
+}
+
+.loginForm input{
+  width: 70%;
+  height: 7%;
+  border-radius: 5px;
+  border: none;
+  margin: 3px;
+  background: rgb(234, 236, 236);
+  padding: 8px;
+  outline: none;
+}
+
+.loginForm button {
+  padding: 10px 30px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: none;
+  background: #80CAE5;
+  color: #fff;
+  outline: none;
+}
+
+.loginForm button:hover{
+  cursor: pointer;
+}
+
+/* Graph Component */
 .inputs {
-  height: 10vh;
+  /* height: 10vh; */
+  width: 96.5%;
   margin: 10px 5px;
   padding: 15px;
   background: #fff;
@@ -26,3 +80,64 @@ code {
   box-shadow: 2px 2px 4px 2px #E0E0DB;
   display: flex;
 }
+
+.container label{
+  font-size: 0.8em;
+  color: rgb(153, 152, 152);
+  font-family: 'Nunito', sans-serif;
+}
+
+.container input {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid rgb(218, 217, 217);
+  height: 38%;
+  margin: 8px 0px;
+  color: rgb(153, 152, 152);
+  font-family: 'Nunito', sans-serif;
+  outline: none;
+}
+
+.container .period {
+  margin-right: 20px;
+  width: 39%;
+}
+
+.container .hour {
+  width: 60%;
+}
+
+.container button {
+  margin: 8px 0px;
+  padding: 12px 25px;
+  border-radius: 3px;
+  border: none;
+  background: #3FBBDC;
+  color: #fff;
+}
+
+.container button:hover {
+  cursor: pointer;
+}
+
+.KPIs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.kpiContainer {
+  width: 20.5%;
+  padding: 15px;
+  margin:  8px 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px 2px #E0E0DB;
+  color: rgb(153, 152, 152);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: space-between;
+}
+
+

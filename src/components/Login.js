@@ -37,11 +37,13 @@ const Login = props => {
   }
   
   return(
-    <div>
-        <h2>Login</h2>
-        <input type="text" name="username" placeholder="Username" onChange={handleInputs} required/> <br/>
-        <input type="password" name="password" placeholder="Password" onChange={handleInputs} required/> <br/>
-        <button onClick={handleLogin}>Login</button> <br/>
+    <div className="loginContainer">
+        <div className="loginForm">
+          <h2>Log in</h2>
+          <input type="text" name="username" placeholder="Username" onChange={handleInputs} required/> <br/>
+          <input type="password" name="password" placeholder="Password" onChange={handleInputs} required/> <br/>
+          <button onClick={handleLogin}>Log in</button> <br/>
+        </div>
     </div>
   )
 }
