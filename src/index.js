@@ -7,6 +7,6 @@ import Router from './Router'
 
 ReactDOM.render(
 <ContextProvider>
-<Router />
+<Router/>
 </ContextProvider>, document.getElementById('root'))
 serviceWorker.unregister();

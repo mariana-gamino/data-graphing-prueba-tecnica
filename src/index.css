@@ -114,6 +114,7 @@ code {
   border: none;
   background: #3FBBDC;
   color: #fff;
+  outline: none;
 }
 
 .container button:hover {
@@ -128,7 +129,8 @@ code {
 
 .kpiContainer {
   width: 20.5%;
-  padding: 15px;
+  padding: 9px;
+  padding-bottom: 3px;
   margin:  8px 10px;
   background: #fff;
   border-radius: 10px;
@@ -138,6 +140,35 @@ code {
   font-size: 0.9em;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.kpiContainer p{
+  color: #000;
+  font-size: 1.6em;
+  margin: 0;
+  text-align: right;
+}
+
+.kpiContainer i{
+  padding-left: 10px;
+}
+
+.chart{
+  width: 96.5%;
+  margin: 10px 5px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px 2px #E0E0DB;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+.chart h2{
+  font-weight: lighter;
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
 }
 
 
