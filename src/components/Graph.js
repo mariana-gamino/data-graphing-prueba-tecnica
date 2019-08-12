@@ -7,7 +7,15 @@ const baseURL = 'https://voldemort.klustera.com'
 
 const Graph = props => {
   const token = Cookies.get('cookie')
-  if(!token) props.history.push('/') 
+  if(!token) props.history.push('/')
+  const options = {
+    legend: {
+      position: 'bottom',
+      labels: {
+        boxWidth: 10
+      }
+    }
+  }
   const [form, handleInputs] = useForm()
   const [data, setData] = useState({
     labels: [],
@@ -181,7 +189,7 @@ const Graph = props => {
       </div>
       <div className="chart">
         <h2>Foot Traffic</h2>
-        <Bar data={data} height={75}/>
+        <Bar data={data} height={75} options={options}/>
       </div>
     </div>
   )

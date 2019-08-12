@@ -167,7 +167,8 @@ code {
 .chart h2{
   font-weight: lighter;
   font-family: 'Nunito', sans-serif;
-  margin: 0;
+  margin: 5px;
+  margin-bottom: 7px;
 }
 
 .loading{
