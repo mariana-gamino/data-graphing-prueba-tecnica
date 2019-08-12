@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react'
-import { MyContext } from '../Context'
+import React, { useState } from 'react'
 import axios from 'axios'
 import useForm from '../hooks/useForm'
 import { Bar } from 'react-chartjs-2';
+import Cookies from 'js-cookie'
 const baseURL = 'https://voldemort.klustera.com'
 
 const Graph = props => {
-  const { token, login } = useContext(MyContext)
-  login('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjU1MDQwMzksInB1YmxpY19pZCI6ImFiMTM1MGY2LTlmZWQtNDE2OS05ZWZmLTFmYmFlMzM1NTVlZSJ9.VCePFLXA8MRhe5nGVg5Lw66RvdLe8bIxnRECD9wBeDY')
-  console.log(token)
+  const token = Cookies.get('cookie')
+  if(!token) props.history.push('/') 
   const [form, handleInputs] = useForm()
   const [data, setData] = useState({
     labels: [],
@@ -39,10 +38,9 @@ const Graph = props => {
   const loyaltyVisitors = document.getElementById('loyaltyVisitors')
   const frequencyOfVisit = document.getElementById('frequencyOfVisit')
   const uniquePassengers = document.getElementById('uniquePassengers')
-  //Checar esto.
-  // if(!token) props.history.push('/') 
 
   const getData = () => {
+    if(!token) props.history.push('/')
     const { startDate, endDate, startHour, endHour } = form
     axios.get(`${baseURL}/get_kpis/1159/${startDate}/${endDate}/${startHour}/${endHour}`, {
     headers: {
@@ -69,7 +67,6 @@ const Graph = props => {
         "Content-type": "application/json"
       }})
     .then(response => {
-      console.log(response)
       let dates = response.data.results.visitors_daily.map(e => {return e[0]})
       let visits = response.data.results.visitors_daily.map(e => {return e[1]})
       let passers = response.data.results.visitors_daily.map(e => {return e[2]})

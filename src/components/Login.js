@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import axios from 'axios'
 import useForm from '../hooks/useForm'
 import swal from 'sweetalert'
-import { MyContext } from '../Context'
+import Cookies from 'js-cookie'
 const baseURL = 'https://voldemort.klustera.com'
 
 
 const Login = props => {
   const [form, handleInputs] = useForm()
   const { username, password } = form
-  const { login } = useContext(MyContext)
+  const inTwoHours = new Date(new Date().getTime() + 120 * 60 * 1000)
 
   const handleLogin = () => {
     let config = {auth: {
@@ -20,7 +20,7 @@ const Login = props => {
     axios.get(`${baseURL}/login`, config)
     .then(response => {
         const {token} = response.data
-        login(token)
+        Cookies.set('cookie', token, {expires: inTwoHours})
         props.history.push('/graph')
     })
     .catch(err => {

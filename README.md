@@ -1,4 +1,4 @@
-# Data Graphing Apps
+# Data Graphing App
 
 ## Run app
 
