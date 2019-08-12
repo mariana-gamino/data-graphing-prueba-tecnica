@@ -3,6 +3,7 @@ import axios from 'axios'
 import useForm from '../hooks/useForm'
 import { Bar } from 'react-chartjs-2';
 import Cookies from 'js-cookie'
+import swal from 'sweetalert'
 const baseURL = 'https://voldemort.klustera.com'
 
 const Graph = props => {
@@ -48,62 +49,99 @@ const Graph = props => {
   const uniquePassengers = document.getElementById('uniquePassengers')
   const loading = document.getElementById('loading')
 
+  const inputValidations = (startDate, endDate, startHour, endHour) => {
+    if(endDate < startDate){
+      swal({
+        title: "Warning",
+        text: "The end date can't be before the start date.",
+        icon: "warning",
+        dangerMode: true,
+        timer: 3000,
+        button: false
+        })
+        return false
+    } else if(endDate === startDate){
+        if(endHour < startHour){
+          swal({
+            title: "Warning",
+            text: "The end hour can't be before the start hour when you select the same day.",
+            icon: "warning",
+            dangerMode: true,
+            timer: 3000,
+            button: false
+            })
+            return false
+        }else return true
+    } else return true
+  }
+
   const getData = () => {
     if(!token) props.history.push('/')
-    loading.innerHTML = '<img src="/loading.gif" width="50px"/>'
     const { startDate, endDate, startHour, endHour } = form
-    axios.get(`${baseURL}/get_kpis/1159/${startDate}/${endDate}/${startHour}/${endHour}`, {
-    headers: {
-      "x-access-token": token,
-      "Content-type": "application/json"
-    }})
-    .then(response => {
-      loading.innerHTML = ''
-      const { uniques, visits, reach_rate, avg_stay, loyals, loyalty, frequency, passersby } = response.data.kpis
-      uniqueVisitors.innerHTML = uniques
-      numVisits.innerHTML = visits
-      reachRate.innerHTML = `${parseFloat(reach_rate).toFixed(2)}%`
-      avgStay.innerHTML = avg_stay
-      uniqueLoyals.innerHTML = loyals
-      loyaltyVisitors.innerHTML = `${parseFloat(loyalty).toFixed(2)}%`
-      frequencyOfVisit.innerHTML = frequency
-      uniquePassengers.innerHTML = passersby
-    })
-    .catch(err => {
-      console.log(err)
-    })
-    axios.get(`${baseURL}/fetch_daily_footprint/1159/${startDate}/${endDate}/${startHour}/${endHour}`, {
+    if(!startDate || !endDate || !startHour || !endHour){
+      swal({
+        title: "Warning",
+        text: "Please fill in all the fields.",
+        icon: "warning",
+        dangerMode: true,
+        timer: 3000,
+        button: false
+        })
+    } else if(inputValidations(startDate, endDate, startHour, endHour)) {
+      loading.innerHTML = '<img src="/loading.gif" width="50px"/>'
+      axios.get(`${baseURL}/get_kpis/1159/${startDate.toString()}/${endDate.toString()}/${startHour.toString().padStart(2,"0")}/${endHour.toString().padStart(2,"0")}`, {
       headers: {
         "x-access-token": token,
         "Content-type": "application/json"
       }})
-    .then(response => {
-      let dates = response.data.results.visitors_daily.map(e => {return e[0]})
-      let visits = response.data.results.visitors_daily.map(e => {return e[1]})
-      let passers = response.data.results.visitors_daily.map(e => {return e[2]})
-      setData(prevState => ({
-        ...prevState,
-        labels: [...dates],
-        datasets: [
-          {
-            label: 'Visits',
-            backgroundColor: '#00EE22',
-            borderColor: 'none',
-            borderWidth: 0,
-            hoverBorderColor: 'none',
-            data: [...visits]
-          },
-          {
-            label: 'Passersby',
-            backgroundColor: '#2C8DFF',
-            borderColor: 'none',
-            borderWidth: 0,
-            hoverBorderColor: 'none',
-            data: [...passers]
-          }
-        ]
-      }))
-    })
+      .then(response => {
+        loading.innerHTML = ''
+        const { uniques, visits, reach_rate, avg_stay, loyals, loyalty, frequency, passersby } = response.data.kpis
+        uniqueVisitors.innerHTML = uniques
+        numVisits.innerHTML = visits
+        reachRate.innerHTML = `${parseFloat(reach_rate).toFixed(2)}%`
+        avgStay.innerHTML = avg_stay
+        uniqueLoyals.innerHTML = loyals
+        loyaltyVisitors.innerHTML = `${parseFloat(loyalty).toFixed(2)}%`
+        frequencyOfVisit.innerHTML = frequency
+        uniquePassengers.innerHTML = passersby
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      axios.get(`${baseURL}/fetch_daily_footprint/1159/${startDate.toString()}/${endDate.toString()}/${startHour}/${endHour}`, {
+        headers: {
+          "x-access-token": token,
+          "Content-type": "application/json"
+        }})
+      .then(response => {
+        let dates = response.data.results.visitors_daily.map(e => {return e[0]})
+        let visits = response.data.results.visitors_daily.map(e => {return e[1]})
+        let passers = response.data.results.visitors_daily.map(e => {return e[2]})
+        setData(prevState => ({
+          ...prevState,
+          labels: [...dates],
+          datasets: [
+            {
+              label: 'Visits',
+              backgroundColor: '#00EE22',
+              borderColor: 'none',
+              borderWidth: 0,
+              hoverBorderColor: 'none',
+              data: [...visits]
+            },
+            {
+              label: 'Passersby',
+              backgroundColor: '#2C8DFF',
+              borderColor: 'none',
+              borderWidth: 0,
+              hoverBorderColor: 'none',
+              data: [...passers]
+            }
+          ]
+        }))
+      })
+    }
   }
 
   return (
@@ -111,8 +149,8 @@ const Graph = props => {
       <div className="inputs">
         <div className="container">
           <label>Period</label><br/>
-          <input type="text" name="startDate" className="period" placeholder="YYYY-MM-DD" onChange={handleInputs}/>
-          <input type="text" name="endDate" className="period" placeholder="YYYY-MM-DD" onChange={handleInputs}/>
+          <input type="date" name="startDate" className="period" placeholder="YYYY-MM-DD" onChange={handleInputs}/>
+          <input type="date" name="endDate" className="period" placeholder="YYYY-MM-DD" onChange={handleInputs}/>
         </div>
         <div className="container" style={{width: "10%"}}>
           <label>Start hour</label><br/>

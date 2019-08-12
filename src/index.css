@@ -29,6 +29,10 @@ code {
 }
 
 .loginForm{
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; */
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -42,6 +46,7 @@ code {
 .loginForm h2{
   color: rgb(32, 35, 39);
   font-size: 2em;
+  width: 100%;
 }
 
 .loginForm input{
