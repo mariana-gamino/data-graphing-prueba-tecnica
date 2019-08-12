@@ -170,4 +170,11 @@ code {
   margin: 0;
 }
 
+.loading{
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 

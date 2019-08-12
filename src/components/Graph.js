@@ -38,9 +38,11 @@ const Graph = props => {
   const loyaltyVisitors = document.getElementById('loyaltyVisitors')
   const frequencyOfVisit = document.getElementById('frequencyOfVisit')
   const uniquePassengers = document.getElementById('uniquePassengers')
+  const loading = document.getElementById('loading')
 
   const getData = () => {
     if(!token) props.history.push('/')
+    loading.innerHTML = '<img src="/loading.gif" width="50px"/>'
     const { startDate, endDate, startHour, endHour } = form
     axios.get(`${baseURL}/get_kpis/1159/${startDate}/${endDate}/${startHour}/${endHour}`, {
     headers: {
@@ -48,6 +50,7 @@ const Graph = props => {
       "Content-type": "application/json"
     }})
     .then(response => {
+      loading.innerHTML = ''
       const { uniques, visits, reach_rate, avg_stay, loyals, loyalty, frequency, passersby } = response.data.kpis
       uniqueVisitors.innerHTML = uniques
       numVisits.innerHTML = visits
@@ -115,6 +118,7 @@ const Graph = props => {
           <label>Refresh</label><br/>
           <button onClick={getData}>REFRESH</button>
         </div>
+        <div className="loading" id="loading"></div>
       </div>
 
       <div className="KPIs">
